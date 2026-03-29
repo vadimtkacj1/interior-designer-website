@@ -151,7 +151,7 @@ function SectionHeader() {
     <header
       dir="rtl"
       lang="he"
-      className="shrink-0 bg-beige-light px-6 pb-4 pt-6 md:px-10 md:pb-5 md:pt-6 lg:px-16"
+      className="shrink-0 bg-beige-light px-6 pb-3 pt-4 md:px-10 md:pb-4 md:pt-5 lg:px-16"
     >
       <div className="mx-auto flex max-w-[100vw] items-center justify-start gap-3">
         <span className="text-xs font-medium uppercase tracking-[0.2em] text-dark/50">

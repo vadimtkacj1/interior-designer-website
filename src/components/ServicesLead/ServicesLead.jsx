@@ -49,7 +49,7 @@ const ServicesLead = () => {
       id="services"
       dir="rtl"
       lang="he"
-      className="relative overflow-hidden bg-beige-light py-20 md:py-32 lg:py-40"
+      className="relative overflow-hidden bg-beige-light py-14 md:py-20 lg:py-24"
       aria-label="שירותים"
     >
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
@@ -76,7 +76,7 @@ const ServicesLead = () => {
           </div>
         </Parallax>
 
-        <div className="grid grid-cols-1 gap-16 md:gap-20 lg:grid-cols-2 lg:gap-x-24 lg:gap-y-20">
+        <div className="grid grid-cols-1 gap-12 md:gap-16 lg:grid-cols-2 lg:gap-x-20 lg:gap-y-14">
           {services.map((service, index) => (
             <Parallax
               key={index}

@@ -17,7 +17,7 @@ const About = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-24">
+        <div className="flex flex-col items-center gap-10 lg:flex-row lg:gap-16">
           <div className="order-2 w-full text-right lg:order-1 lg:w-1/2">
             <h2 className="text-3xl font-semibold leading-[1.12] tracking-tight text-dark md:text-4xl lg:text-[2.35rem]">
               <span className="text-dark/40">שלום,</span>
@@ -35,14 +35,16 @@ const About = () => {
             </div>
           </div>
 
-          <div className="order-1 flex w-full justify-center lg:order-2 lg:w-1/2 lg:justify-end">
-            <div className="aspect-4/5 w-full max-w-md overflow-hidden rounded-sm shadow-sm md:rounded-md">
-              <img
-                src="/designer.png"
-                alt="אלכסנדרה פאצינה"
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
+          <div className="order-1 w-full lg:order-2 lg:w-1/2">
+            <div className="flex justify-start lg:justify-end" dir="ltr">
+              <div className="aspect-4/5 w-[min(100%,15.5rem)] shrink-0 overflow-hidden rounded-sm shadow-sm sm:w-[min(100%,17rem)] md:rounded-md lg:w-full lg:max-w-md">
+                <img
+                  src="/designer.png"
+                  alt="אלכסנדרה פאצינה"
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
         </div>

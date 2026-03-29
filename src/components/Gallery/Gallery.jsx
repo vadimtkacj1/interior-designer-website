@@ -100,7 +100,7 @@ const Gallery = () => {
   }, [openIndex]);
 
   return (
-    <section id="portfolio" className="section relative overflow-hidden bg-beige-light" dir="rtl" lang="he">
+    <section id="portfolio" className="section relative overflow-x-clip bg-beige-light" dir="rtl" lang="he">
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
         <Parallax
           speed={0.26}
@@ -133,7 +133,7 @@ const Gallery = () => {
           </h2> */}
         </div>
 
-        <div className="mx-auto max-w-6xl columns-2 [column-gap:0.75rem] sm:[column-gap:1.25rem] md:max-w-5xl md:[column-gap:2rem] lg:[column-gap:2.25rem]">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 sm:gap-5 md:max-w-5xl md:gap-6 lg:gap-8">
           {projects.map((project, index) => (
             <GalleryCard key={index} project={project} index={index} onOpen={setOpenIndex} />
           ))}

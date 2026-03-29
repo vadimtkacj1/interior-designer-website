@@ -84,7 +84,7 @@ const Footer = () => {
     <footer
       dir="rtl"
       lang="he"
-      className="relative overflow-hidden bg-[#2e4d33] py-14 text-white md:py-16 lg:py-20"
+      className="relative overflow-hidden bg-[#2e4d33] py-12 text-white md:py-14 lg:py-16"
     >
       <div className="pointer-events-none absolute inset-0 z-0 opacity-90" aria-hidden>
         <Parallax
@@ -115,7 +115,7 @@ const Footer = () => {
           ))}
         </nav>
 
-        <div className="mt-12 flex flex-col items-center gap-3 text-center text-sm text-white md:mt-14 md:text-base">
+        <div className="mt-10 flex flex-col items-center gap-3 text-center text-sm text-white md:mt-12 md:text-base">
           <p className="leading-relaxed">
             © {year} אלכסנדרה פאצינה. כל הזכויות שמורות.
           </p>

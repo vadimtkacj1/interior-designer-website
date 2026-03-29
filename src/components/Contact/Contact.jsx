@@ -89,10 +89,10 @@ const Contact = () => {
       id="contact"
       dir="rtl"
       lang="he"
-      className="border-t border-dark/[0.06] bg-beige-light py-20 md:py-28 lg:py-32"
+      className="border-t border-dark/[0.06] bg-beige-light py-14 md:py-20 lg:py-24"
     >
       <div className="container">
-        <div className="mx-auto grid max-w-5xl gap-12 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-0">
+        <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-0">
           <header className="text-right lg:col-span-5">
             <div className="flex items-center justify-start gap-3">
               <span className="text-xs font-medium uppercase tracking-[0.2em] text-dark/50">
