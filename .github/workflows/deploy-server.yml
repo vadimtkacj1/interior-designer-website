@@ -41,7 +41,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: dist/*
-          target: ${{ vars.DEPLOY_REMOTE_DIR }}
+          target: /var/www/html
           strip_components: 1
 
       - name: Write .env and reload nginx
@@ -53,7 +53,7 @@ jobs:
           port: 22
           script: |
             set -euo pipefail
-            cat > ${{ vars.DEPLOY_REMOTE_DIR }}/.env <<EOF
+            cat > /var/www/html/.env <<EOF
             EMAIL_HOST=${{ secrets.EMAIL_HOST }}
             EMAIL_PORT=${{ secrets.EMAIL_PORT }}
             EMAIL_USER=${{ secrets.EMAIL_USER }}
