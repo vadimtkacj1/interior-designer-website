@@ -16,9 +16,9 @@ const Hero = () => {
     <section
       dir="rtl"
       lang="he"
-      className="relative flex min-h-[100dvh] flex-col items-center justify-start overflow-hidden bg-beige-light pt-[max(5rem,env(safe-area-inset-top,0px)+4.5rem)] md:min-h-screen md:justify-center md:pt-16"
+      className="relative flex flex-col items-center justify-start overflow-hidden bg-beige-light pt-[max(5rem,env(safe-area-inset-top,0px)+4.5rem)] md:min-h-screen md:justify-center md:pt-16 "
     >
-      <div className="container relative z-10">
+      <div className="container relative z-10 mt-8">
         <div className="mx-auto max-w-3xl px-4 text-center md:max-w-2xl md:px-8 lg:max-w-[42rem]">
           <h1 className="mb-8 text-5xl font-bold leading-[1.08] tracking-tight text-dark md:mb-10 md:text-6xl lg:text-[6rem] xl:text-[7rem]">
             <Parallax speed={-0.09} speedX={0.04} className="block">

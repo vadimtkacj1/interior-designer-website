@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 function prefersReducedMotion() {
   if (typeof window === 'undefined') return true;
@@ -7,67 +7,96 @@ function prefersReducedMotion() {
 
 const MOBILE_MQ = '(max-width: 767.98px)';
 
-function parallaxDisabledForViewport() {
-  if (typeof window === 'undefined') return true;
-  return window.matchMedia(MOBILE_MQ).matches;
+function isMobileViewport() {
+  return typeof window !== 'undefined' && window.matchMedia(MOBILE_MQ).matches;
+}
+
+/** Коефіцієнт руху на телефоні — менше пікселів, менше навантаження й візуальних артефактів */
+const MOBILE_SPEED_FACTOR = 0.55;
+
+const subscribers = new Set();
+let rafScheduled = false;
+let globalListening = false;
+
+function flushParallax() {
+  rafScheduled = false;
+  if (typeof window === 'undefined') return;
+
+  const vh = window.innerHeight;
+  const viewportCenter = vh / 2;
+  const factor = isMobileViewport() ? MOBILE_SPEED_FACTOR : 1;
+
+  for (const sub of subscribers) {
+    const el = sub.ref.current;
+    if (!el || !el.isConnected) continue;
+    const rect = el.getBoundingClientRect();
+    const centerY = rect.top + rect.height / 2;
+    const delta = viewportCenter - centerY;
+    const x = delta * sub.speedX * factor;
+    const y = delta * sub.speedY * factor;
+    el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  }
+}
+
+function scheduleParallax() {
+  if (rafScheduled) return;
+  rafScheduled = true;
+  requestAnimationFrame(flushParallax);
+}
+
+function attachGlobalIfNeeded() {
+  if (globalListening) return;
+  window.addEventListener('scroll', scheduleParallax, { passive: true });
+  window.addEventListener('resize', scheduleParallax, { passive: true });
+  globalListening = true;
+}
+
+function addSubscriber(sub) {
+  const wasEmpty = subscribers.size === 0;
+  subscribers.add(sub);
+  if (wasEmpty) attachGlobalIfNeeded();
+  scheduleParallax();
+}
+
+function removeSubscriber(sub) {
+  subscribers.delete(sub);
+  const el = sub.ref.current;
+  if (el) {
+    el.style.transform = '';
+    el.style.willChange = '';
+  }
+  if (subscribers.size === 0 && globalListening) {
+    window.removeEventListener('scroll', scheduleParallax);
+    window.removeEventListener('resize', scheduleParallax);
+    globalListening = false;
+    rafScheduled = false;
+  }
 }
 
 /**
- * Parallax from distance to viewport center (vertical scroll).
- * Оновлює transform напряму в DOM — без setState під час скролу.
+ * Parallax від відстані до центру вікна.
+ * Один rAF на кадр для всіх елементів + прямий запис у DOM (без setState при скролі).
  */
 export function useParallaxOffset(speedY = 0.12, speedX = 0) {
   const ref = useRef(null);
-  const [parallaxAllowed, setParallaxAllowed] = useState(() => !parallaxDisabledForViewport());
 
   useEffect(() => {
-    if (typeof window === 'undefined') return undefined;
-    const mq = window.matchMedia(MOBILE_MQ);
-    const sync = () => setParallaxAllowed(!mq.matches);
-    sync();
-    mq.addEventListener('change', sync);
-    return () => mq.removeEventListener('change', sync);
-  }, []);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || prefersReducedMotion() || !parallaxAllowed) {
-      return;
+    if (prefersReducedMotion()) {
+      return undefined;
     }
 
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      if (!el.isConnected) return;
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const centerY = rect.top + rect.height / 2;
-      const viewportCenter = vh / 2;
-      const delta = viewportCenter - centerY;
-      const x = delta * speedX;
-      const y = delta * speedY;
-      el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-    };
+    const sub = { ref, speedY, speedX };
+    addSubscriber(sub);
 
-    const onScrollOrResize = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
-    };
-
-    el.style.willChange = 'transform';
-    window.addEventListener('scroll', onScrollOrResize, { passive: true });
-    window.addEventListener('resize', onScrollOrResize, { passive: true });
-    update();
+    const el = ref.current;
+    if (el) {
+      el.style.willChange = isMobileViewport() ? '' : 'transform';
+    }
 
     return () => {
-      window.removeEventListener('scroll', onScrollOrResize);
-      window.removeEventListener('resize', onScrollOrResize);
-      el.style.transform = '';
-      el.style.willChange = '';
+      removeSubscriber(sub);
     };
-  }, [speedY, speedX, parallaxAllowed]);
+  }, [speedY, speedX]);
 
   return { ref, style: {} };
 }
