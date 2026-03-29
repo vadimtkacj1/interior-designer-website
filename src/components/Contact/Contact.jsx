@@ -3,14 +3,81 @@ import React, { useState } from 'react';
 const fieldClass =
   'w-full min-h-[3rem] rounded-none border border-dark/15 bg-white px-4 py-3 text-right text-base text-dark placeholder:text-dark/30 outline-none transition-[border-color,background-color,box-shadow] focus:border-dark/35 focus:ring-1 focus:ring-dark/10 md:min-h-[3.25rem] md:text-[1.0625rem]';
 
+const textareaClass = `${fieldClass} min-h-[7rem] resize-y py-3`;
+
+const contactApiUrl = import.meta.env.VITE_CONTACT_API_URL?.trim() || '';
+
+function validatePhone(phone) {
+  const clean = phone?.replace(/[\s\-()]/g, '') || '';
+  if (clean.length < 9) return 'מספר טלפון לא תקין - יש להזין לפחות 9 ספרות';
+  const phoneRegex = /^(\+?972|0)?([2-9]\d{7,8})$/;
+  if (!phoneRegex.test(clean)) {
+    return 'מספר טלפון לא תקין - פורמט: 05XXXXXXXX או +97205XXXXXXXX';
+  }
+  return null;
+}
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
+    message: '',
   });
+  const [status, setStatus] = useState('idle');
+  const [feedback, setFeedback] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setFeedback('');
+
+    if (!contactApiUrl) {
+      setStatus('error');
+      setFeedback('שירות השליחה לא הוגדר. צור קשר עם מנהל האתר.');
+      return;
+    }
+
+    const name = formData.name.trim();
+    if (name.length < 2) {
+      setStatus('error');
+      setFeedback('שם חייב להכיל לפחות 2 תווים');
+      return;
+    }
+
+    const phoneErr = validatePhone(formData.phone);
+    if (phoneErr) {
+      setStatus('error');
+      setFeedback(phoneErr);
+      return;
+    }
+
+    setStatus('submitting');
+
+    try {
+      const res = await fetch(contactApiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          phone: formData.phone.trim(),
+          message: formData.message.trim() || undefined,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setStatus('error');
+        setFeedback(data.error || 'אירעה שגיאה. נסו שוב מאוחר יותר.');
+        return;
+      }
+
+      setStatus('success');
+      setFeedback('הפרטים נשלחו בהצלחה. נחזור אליכם בקרוב.');
+      setFormData({ name: '', phone: '', message: '' });
+    } catch {
+      setStatus('error');
+      setFeedback('לא ניתן להתחבר לשרת. בדקו את החיבור או נסו מאוחר יותר.');
+    }
   };
 
   const handleChange = (e) => {
@@ -49,6 +116,19 @@ const Contact = () => {
             className="flex flex-col gap-6 lg:col-span-6 lg:col-start-7"
             aria-labelledby="contact-heading"
           >
+            {feedback ? (
+              <p
+                role="status"
+                className={
+                  status === 'success'
+                    ? 'border border-[#2D4733]/25 bg-[#2D4733]/08 px-4 py-3 text-right text-base text-dark'
+                    : 'border border-red-200 bg-red-50 px-4 py-3 text-right text-base text-red-900'
+                }
+              >
+                {feedback}
+              </p>
+            ) : null}
+
             <input
               id="contact-name"
               type="text"
@@ -59,6 +139,7 @@ const Contact = () => {
               autoComplete="name"
               aria-label="שם מלא"
               required
+              disabled={status === 'submitting'}
               className={fieldClass}
             />
 
@@ -73,14 +154,28 @@ const Contact = () => {
               inputMode="tel"
               aria-label="טלפון"
               required
+              disabled={status === 'submitting'}
               className={fieldClass}
+            />
+
+            <textarea
+              id="contact-message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="הודעה (אופציונלי)"
+              rows={4}
+              aria-label="הודעה"
+              disabled={status === 'submitting'}
+              className={textareaClass}
             />
 
             <button
               type="submit"
-              className="mt-1 min-h-[3.25rem] w-full rounded-none border border-[#2D4733] bg-[#2D4733] px-4 py-3 text-center text-base font-medium text-white transition-colors hover:bg-[#243829] md:min-h-[3.5rem] md:text-lg"
+              disabled={status === 'submitting'}
+              className="mt-1 min-h-[3.25rem] w-full rounded-none border border-[#2D4733] bg-[#2D4733] px-4 py-3 text-center text-base font-medium text-white transition-colors hover:bg-[#243829] disabled:cursor-not-allowed disabled:opacity-60 md:min-h-[3.5rem] md:text-lg"
             >
-              שליחה
+              {status === 'submitting' ? 'שולח…' : 'שליחה'}
             </button>
           </form>
         </div>
