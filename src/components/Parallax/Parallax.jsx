@@ -14,9 +14,5 @@ export default function Parallax({
   ...rest
 }) {
   const { ref, style } = useParallaxOffset(speed, speedX);
-  return React.createElement(
-    Tag,
-    { ref, className, style: { ...extraStyle, ...style }, ...rest },
-    children,
-  );
+  return React.createElement(Tag, { ref, className, style: { ...style, ...extraStyle }, ...rest }, children);
 }

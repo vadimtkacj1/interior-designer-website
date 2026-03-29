@@ -5,7 +5,10 @@ const Hero = () => {
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const reduced =
+        typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      element.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
     }
   };
 
@@ -13,7 +16,7 @@ const Hero = () => {
     <section
       dir="rtl"
       lang="he"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-beige-light pt-20 md:pt-16"
+      className="relative flex min-h-[100dvh] flex-col items-center justify-start overflow-hidden bg-beige-light pt-[max(5rem,env(safe-area-inset-top,0px)+4.5rem)] md:min-h-screen md:justify-center md:pt-16"
     >
       <div className="container relative z-10">
         <div className="mx-auto max-w-3xl px-4 text-center md:max-w-2xl md:px-8 lg:max-w-[42rem]">

@@ -5,32 +5,48 @@ function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+const MOBILE_MQ = '(max-width: 767.98px)';
+
+function parallaxDisabledForViewport() {
+  if (typeof window === 'undefined') return true;
+  return window.matchMedia(MOBILE_MQ).matches;
+}
+
 /**
  * Parallax from distance to viewport center (vertical scroll).
- * @param {number} speedY — vertical multiplier (typical 0.08–0.35)
- * @param {number} speedX — horizontal drift using same driver (typical -0.12–0.12)
+ * Оновлює transform напряму в DOM — без setState під час скролу.
  */
 export function useParallaxOffset(speedY = 0.12, speedX = 0) {
   const ref = useRef(null);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [parallaxAllowed, setParallaxAllowed] = useState(() => !parallaxDisabledForViewport());
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    const mq = window.matchMedia(MOBILE_MQ);
+    const sync = () => setParallaxAllowed(!mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || prefersReducedMotion()) return;
+    if (!el || prefersReducedMotion() || !parallaxAllowed) {
+      return;
+    }
 
     let ticking = false;
     const update = () => {
       ticking = false;
-      if (!el) return;
+      if (!el.isConnected) return;
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
       const centerY = rect.top + rect.height / 2;
       const viewportCenter = vh / 2;
       const delta = viewportCenter - centerY;
-      setOffset({
-        x: delta * speedX,
-        y: delta * speedY,
-      });
+      const x = delta * speedX;
+      const y = delta * speedY;
+      el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
     };
 
     const onScrollOrResize = () => {
@@ -40,6 +56,7 @@ export function useParallaxOffset(speedY = 0.12, speedX = 0) {
       }
     };
 
+    el.style.willChange = 'transform';
     window.addEventListener('scroll', onScrollOrResize, { passive: true });
     window.addEventListener('resize', onScrollOrResize, { passive: true });
     update();
@@ -47,18 +64,10 @@ export function useParallaxOffset(speedY = 0.12, speedX = 0) {
     return () => {
       window.removeEventListener('scroll', onScrollOrResize);
       window.removeEventListener('resize', onScrollOrResize);
+      el.style.transform = '';
+      el.style.willChange = '';
     };
-  }, [speedY, speedX]);
+  }, [speedY, speedX, parallaxAllowed]);
 
-  const reduced = typeof window !== 'undefined' && prefersReducedMotion();
-  const x = reduced ? 0 : offset.x;
-  const y = reduced ? 0 : offset.y;
-
-  return {
-    ref,
-    style: {
-      transform: `translate3d(${x}px, ${y}px, 0)`,
-      willChange: reduced ? undefined : 'transform',
-    },
-  };
+  return { ref, style: {} };
 }
