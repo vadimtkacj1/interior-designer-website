@@ -54,7 +54,7 @@ function GalleryCard({ project, index, onOpen }) {
   const { ref, style } = useParallaxOffset(speedY, 0);
 
   return (
-    <article className="group relative mb-5 break-inside-avoid overflow-hidden rounded-sm bg-transparent md:mb-8 md:rounded-md">
+    <article className="group relative mb-3 overflow-hidden rounded-sm bg-transparent sm:mb-5 md:mb-8 md:rounded-md">
       <button
         type="button"
         onClick={() => onOpen(index)}
@@ -62,14 +62,19 @@ function GalleryCard({ project, index, onOpen }) {
         aria-label={`פתיחה מלאה: ${project.title}`}
       >
         <div className="overflow-hidden rounded-sm bg-beige-light md:rounded-md">
-          <div ref={ref} style={style}>
-            <img
-              src={project.image}
-              alt={project.title}
-              loading="lazy"
-              decoding="async"
-              className="h-auto w-full object-contain align-middle transition-transform duration-700 ease-out group-hover:scale-[1.008]"
-            />
+          <div ref={ref} style={style} className="w-full">
+            {/* Резерв висоти до завантаження — інакше на мобільному img без розмірів дає 0px висоти */}
+            <div className="relative aspect-[4/5] w-full bg-beige-light">
+              <img
+                src={project.image}
+                alt={project.title}
+                width={800}
+                height={1000}
+                loading={index < 4 ? 'eager' : 'lazy'}
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+              />
+            </div>
           </div>
         </div>
       </button>
@@ -100,7 +105,12 @@ const Gallery = () => {
   }, [openIndex]);
 
   return (
-    <section id="portfolio" className="section relative overflow-x-clip bg-beige-light" dir="rtl" lang="he">
+    <section
+      id="portfolio"
+      className="section relative overflow-x-clip bg-beige-light scroll-mt-20 md:scroll-mt-24"
+      dir="rtl"
+      lang="he"
+    >
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
         <Parallax
           speed={0.26}
@@ -128,9 +138,9 @@ const Gallery = () => {
               <span className="h-px w-10 shrink-0 bg-dark/25" aria-hidden />
             </div>
           </Parallax>
-          {/* <h2 className="section-title-gap text-3xl font-semibold leading-[1.12] tracking-tight text-dark md:text-4xl lg:text-[2.35rem]">
+          <h2 className="section-title-gap text-3xl font-semibold leading-[1.12] tracking-tight text-dark md:text-4xl lg:text-[2.35rem]">
             פרויקטים שבוצעו
-          </h2> */}
+          </h2>
         </div>
 
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 sm:gap-5 md:max-w-5xl md:gap-6 lg:gap-8">
