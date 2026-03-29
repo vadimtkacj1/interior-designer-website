@@ -54,10 +54,10 @@ jobs:
           script: |
             set -euo pipefail
             cat > /var/www/html/.env <<EOF
-            EMAIL_HOST=${{ secrets.EMAIL_HOST }}
-            EMAIL_PORT=${{ secrets.EMAIL_PORT }}
-            EMAIL_USER=${{ secrets.EMAIL_USER }}
-            EMAIL_PASS=${{ secrets.EMAIL_PASS }}
+            EMAIL_SERVER_HOST=${{ secrets.EMAIL_SERVER_HOST }}
+            EMAIL_SERVER_PORT=${{ secrets.EMAIL_SERVER_PORT }}
+            EMAIL_SERVER_USER=${{ secrets.EMAIL_SERVER_USER }}
+            EMAIL_SERVER_PASSWORD=${{ secrets.EMAIL_SERVER_PASSWORD }}
             EMAIL_TO=${{ secrets.EMAIL_TO }}
             EOF
-            nginx -s reload
+            /usr/sbin/nginx -s reload || true
