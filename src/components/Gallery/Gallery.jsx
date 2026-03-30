@@ -131,7 +131,7 @@ const Gallery = () => {
         <div className="mb-12 text-right md:mb-16 lg:mb-20">
           <Parallax speed={-0.08} speedX={0.05} className="inline-block w-full">
             <div className="flex items-center justify-start gap-3">
-              <span className="text-sm font-medium uppercase tracking-[0.2em] text-dark/55 md:text-[0.9375rem]">
+              <span className="text-base font-medium uppercase tracking-[0.2em] text-dark/55 md:text-lg">
                 עבודות
               </span>
               <span className="h-px w-12 shrink-0 bg-dark/25 md:w-14" aria-hidden />

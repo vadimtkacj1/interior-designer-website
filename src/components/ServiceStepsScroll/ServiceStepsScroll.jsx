@@ -41,51 +41,59 @@ const steps = [
 
 function StepRow({ step, index }) {
   const rowRef = useRef(null);
-  const [parallax, setParallax] = useState(1);
-  const [inView, setInView] = useState(false);
+  const imgRef = useRef(null);
+  const numRef = useRef(null);
+  const textRef = useRef(null);
   const isEven = index % 2 === 0;
   const stepNum = String(index + 1).padStart(2, '0');
 
   useEffect(() => {
-    const el = rowRef.current;
-    if (!el) return undefined;
+    const row = rowRef.current;
+    if (!row) return undefined;
+
+    let rafId = null;
 
     const update = () => {
-      const rect = el.getBoundingClientRect();
+      const rect = row.getBoundingClientRect();
       const wh = window.innerHeight;
-      // normalized offset: positive = below viewport, 0 = centered, negative = above
-      const centerOffset = (rect.top + rect.height / 2 - wh / 2) / wh;
-      setParallax(centerOffset);
-      setInView(rect.top < wh * 0.88 && rect.bottom > wh * 0.1);
+      const p = (rect.top + rect.height / 2 - wh / 2) / wh;
+      const visible = rect.top < wh * 0.9 && rect.bottom > 0;
+      const opacity = visible ? '1' : '0';
+
+      if (imgRef.current) {
+        imgRef.current.style.transform = `translateX(${p * 80}px)`;
+        imgRef.current.style.opacity = opacity;
+      }
+      if (numRef.current) {
+        numRef.current.style.transform = `translateY(${p * 40}px)`;
+        numRef.current.style.opacity = opacity;
+      }
+      if (textRef.current) {
+        textRef.current.style.transform = `translateX(${-p * 60}px)`;
+        textRef.current.style.opacity = opacity;
+      }
+      rafId = null;
     };
 
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update, { passive: true });
+    const onScroll = () => {
+      if (!rafId) rafId = requestAnimationFrame(update);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
     update();
     return () => {
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
-  // image slides in from the right as element scrolls into view
-  const imgX = parallax * 90;
-  // text slides in from the left
-  const textX = -parallax * 65;
-  // number drifts vertically
-  const numY = parallax * 45;
-
-  const opacity = inView ? 1 : 0;
-
   const image = step.image && (
     <div
+      ref={imgRef}
       className="order-1 md:order-0 w-full md:w-[42%] shrink-0"
-      style={{
-        transform: `translateX(${imgX}px)`,
-        opacity,
-        transition: 'opacity 0.5s ease',
-        willChange: 'transform',
-      }}
+      style={{ opacity: 0, willChange: 'transform' }}
     >
       <img
         src={step.image}
@@ -98,13 +106,9 @@ function StepRow({ step, index }) {
 
   const number = (
     <div
+      ref={numRef}
       className="order-2 md:order-0 shrink-0 self-center"
-      style={{
-        transform: `translateY(${numY}px)`,
-        opacity,
-        transition: 'opacity 0.5s ease',
-        willChange: 'transform',
-      }}
+      style={{ opacity: 0, willChange: 'transform' }}
     >
       <span
         className="block text-[6rem] font-semibold leading-none tracking-tight md:text-[8rem] lg:text-[10rem] select-none"
@@ -117,18 +121,14 @@ function StepRow({ step, index }) {
 
   const text = (
     <div
+      ref={textRef}
       className="order-3 md:order-0 flex-1"
-      style={{
-        transform: `translateX(${textX}px)`,
-        opacity,
-        transition: 'opacity 0.5s ease',
-        willChange: 'transform',
-      }}
+      style={{ opacity: 0, willChange: 'transform' }}
     >
-      <h2 className="text-3xl font-semibold leading-tight tracking-tight text-dark md:text-4xl lg:text-5xl">
+      <h2 className="text-3xl font-semibold leading-tight tracking-tight text-dark md:text-4xl lg:text-5xl text-center">
         {step.title}
       </h2>
-      <p className="mt-5 text-right text-base leading-relaxed text-gray-500 md:text-lg lg:text-xl max-w-xl">
+      <p className="mt-5 text-center text-base leading-relaxed text-gray-500 md:text-lg lg:text-xl max-w-xl">
         {step.body}
       </p>
     </div>
@@ -142,17 +142,9 @@ function StepRow({ step, index }) {
       className="flex flex-col md:flex-row items-center gap-8 md:gap-10 px-8 py-12 md:px-16 md:py-14 lg:px-24 lg:py-16 overflow-hidden"
     >
       {isEven ? (
-        <>
-          {image}
-          {number}
-          {text}
-        </>
+        <>{image}{number}{text}</>
       ) : (
-        <>
-          {text}
-          {number}
-          {image}
-        </>
+        <>{text}{number}{image}</>
       )}
     </div>
   );
@@ -184,7 +176,7 @@ const ServiceStepsScroll = () => {
         }`}
       >
         <div className="flex items-center justify-start gap-4">
-          <span className="text-xs font-medium uppercase tracking-[0.25em] text-dark/45">
+          <span className="text-base font-medium uppercase tracking-[0.2em] text-dark/55 md:text-lg">
             שלבי העבודה
           </span>
           <span className="h-px w-10 shrink-0 bg-dark/20" aria-hidden />

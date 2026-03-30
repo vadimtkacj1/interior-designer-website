@@ -31,9 +31,9 @@ const Services = () => {
   return (
     <section id="services" className="section bg-beige-light" dir="rtl" lang="he">
       <div className="container">
-        <div className="mb-12 text-right md:mb-16 lg:mb-20">
+        <div className="mb-12 text-center md:mb-16 lg:mb-20">
           <div className="flex items-center justify-start gap-3">
-            <span className="text-sm font-medium uppercase tracking-[0.2em] text-dark/55 md:text-[0.9375rem]">
+            <span className="text-base font-medium uppercase tracking-[0.2em] text-dark/55 md:text-lg">
               שירותים
             </span>
             <span className="h-px w-12 shrink-0 bg-dark/25 md:w-14" aria-hidden />
@@ -47,7 +47,7 @@ const Services = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="border-b border-dark/[0.08] py-8 md:border-0 md:py-0"
+              className="border-b border-dark/[0.08] py-8 text-center md:border-0 md:py-0"
             >
               <h3 className="mb-2 text-lg font-semibold text-dark md:text-base">
                 {service.title}

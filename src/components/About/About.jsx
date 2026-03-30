@@ -31,13 +31,13 @@ const About = () => {
         revealed ? 'section-reveal-active' : ''
       }`}
     >
-      <div className="container relative z-10">
+      <div className="container relative z-10 ">
         <div
           className="reveal-child mb-12 text-right md:mb-16 lg:mb-20"
           style={{ '--reveal-stagger': 0 }}
         >
           <div className="flex items-center justify-start gap-3">
-            <span className="text-sm font-medium uppercase tracking-[0.2em] text-dark/55 md:text-[0.9375rem]">
+            <span className="text-base font-medium uppercase tracking-[0.2em] text-dark/55 md:text-lg">
               אודות
             </span>
             <span
@@ -47,9 +47,9 @@ const About = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-stretch gap-14 lg:flex-row lg:items-start lg:gap-20">
+        <div className="flex flex-col items-center gap-14 lg:flex-row lg:items-start lg:gap-20">
           <div
-            className="reveal-child order-2 w-full text-right lg:order-1 lg:w-1/2"
+            className="reveal-child order-2 w-full text-center lg:order-1 lg:w-1/2"
             style={{ '--reveal-stagger': 2 }}
           >
             <h2 className="text-3xl font-semibold leading-[1.12] tracking-tight text-dark md:text-4xl lg:text-[2.35rem]">
@@ -59,10 +59,10 @@ const About = () => {
             </h2>
 
             <div className="mt-10 space-y-5">
-              <p className="text-base font-semibold text-dark md:text-lg">
+              <p className="text-center text-base font-semibold text-dark md:text-lg">
                 מעצבת פנים ואדריכלית רב-תחומית.
               </p>
-              <p className="max-w-prose text-base leading-relaxed text-gray-600 md:text-lg">
+              <p className="text-center max-w-prose text-base leading-relaxed text-gray-600 md:text-lg">
                 אני משלבת בסיס של הרמוניה קלאסית עם הנדסה טכנית קפדנית כדי ליצור חללים שהם גם יפהפיים וגם מבוצעים בשלמות.
               </p>
             </div>
@@ -73,7 +73,7 @@ const About = () => {
             dir="ltr"
             style={{ '--reveal-stagger': 1 }}
           >
-            <figure className="mx-auto w-full lg:mr-0 lg:ml-auto">
+            <figure className="mx-auto w-full lg:mr-0 lg:ml-auto ">
               <div className="aspect-[4/5] w-full overflow-hidden rounded-none border border-dark/[0.12]">
                 <img
                   src="/designer.png"

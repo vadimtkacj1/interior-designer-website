@@ -95,7 +95,7 @@ const Contact = () => {
         <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-0">
           <header className="text-right lg:col-span-5">
             <div className="flex items-center justify-start gap-3">
-              <span className="text-sm font-medium uppercase tracking-[0.2em] text-dark/55 md:text-[0.9375rem]">
+              <span className="text-base font-medium uppercase tracking-[0.2em] text-dark/55 md:text-lg">
                 יצירת קשר
               </span>
               <span className="h-px w-12 shrink-0 bg-dark/25 md:w-14" aria-hidden />

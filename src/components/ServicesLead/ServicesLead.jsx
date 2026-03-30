@@ -75,13 +75,13 @@ const ServicesLead = () => {
       }`}
       aria-label="שירותים"
     >
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-right md:px-8 lg:px-12">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-center md:px-8 lg:px-12">
         <div
           className="reveal-child mb-16 md:mb-20"
           style={{ '--reveal-stagger': 0 }}
         >
           <div className="flex items-center justify-start gap-3">
-            <span className="text-sm font-medium uppercase tracking-[0.2em] text-dark/55 md:text-[0.9375rem]">
+            <span className="text-base font-medium uppercase tracking-[0.2em] text-dark/55 md:text-lg">
               שירותים
             </span>
             <span
@@ -95,14 +95,14 @@ const ServicesLead = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="reveal-child"
+              className="reveal-child flex flex-col justify-center"
               style={{ '--reveal-stagger': index + 1 }}
             >
-              <div className="reveal-icon mb-6 text-dark/60">{service.icon}</div>
-              <h3 className="mb-4 text-2xl font-semibold leading-[1.12] tracking-tight text-dark md:text-3xl">
+              <div className="reveal-icon mb-6 flex justify-center text-dark/60">{service.icon}</div>
+              <h3 className="mb-4 text-center text-2xl font-semibold leading-[1.12] tracking-tight text-dark md:text-3xl">
                 {service.title}
               </h3>
-              <p className="text-base leading-relaxed text-gray-600 md:text-lg">
+              <p className="text-center text-base leading-relaxed text-gray-600 md:text-lg">
                 {service.description}
               </p>
             </div>
