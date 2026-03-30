@@ -22,15 +22,15 @@ const Hero = () => {
         <div className="mx-auto max-w-3xl px-4 text-center md:max-w-2xl md:px-8 lg:max-w-[42rem]">
           <h1 className="mb-8 text-5xl font-bold leading-[1.08] tracking-tight text-dark md:mb-10 md:text-6xl lg:text-[6rem] xl:text-[7rem]">
             <Parallax speed={-0.09} speedX={0.04} className="block">
-              <span className="block">עיצוב.</span>
+              <span className="block">עיצוב חסר פשרות.</span>
             </Parallax>
             <Parallax speed={-0.14} speedX={-0.05} className="mt-1 block md:mt-0">
-              <span className="block">בנייה. קיימות.</span>
+              <span className="block">עד הפרט האחרון.</span>
             </Parallax>
           </h1>
           <Parallax speed={-0.07} speedX={0.03} className="block">
             <p className="mx-auto mb-12 max-w-2xl text-lg font-normal leading-[1.75] text-dark/85 md:mb-14 md:max-w-lg md:text-base lg:text-lg lg:leading-[1.8]">
-              ביצוע אדריכלי ועיצוב פנים במעגל מלא. מקונספטים רגשיים ושרטוטים מדויקים, ועד לניהול פרויקטים מאלף ועד תו ושילוב מערכות סולאריות.
+              סטודיו בוטיק לאדריכלות ועיצוב פנים המעניק מעטפת מלאה. משלב הקונספט ועד קבלת המפתח, אנו יוצרים חללים מרשימים, חכמים ומותאמים אישית לאורח החיים שלכם.
             </p>
           </Parallax>
           <Parallax speed={-0.05} className="flex justify-center">
@@ -40,7 +40,7 @@ const Hero = () => {
               onClick={() => scrollToSection('contact')}
               className="inline-flex items-center justify-center gap-3 rounded-none bg-[#2D4733] px-8 py-4 text-base font-medium text-white transition-colors hover:bg-[#243829] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2D4733] focus-visible:ring-offset-2 focus-visible:ring-offset-beige-light md:px-9 md:py-3.5 md:text-sm"
             >
-              <span dir="rtl">בקש חזון בלעדי</span>
+              <span dir="rtl">השאירו פרטים לשיחת ייעוץ</span>
               <span className="text-base leading-none md:text-sm" aria-hidden>
                 →
               </span>
