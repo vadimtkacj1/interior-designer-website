@@ -1,5 +1,4 @@
-import React from 'react';
-import Parallax from '../Parallax/Parallax';
+import React, { useEffect, useRef, useState } from 'react';
 
 const services = [
   {
@@ -44,59 +43,71 @@ const services = [
 ];
 
 const ServicesLead = () => {
+  const sectionRef = useRef(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return undefined;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -6% 0px' },
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       id="services"
       dir="rtl"
       lang="he"
-      className="relative overflow-hidden bg-beige-light py-14 md:py-20 lg:py-24"
+      className={`section-reveal-ready relative overflow-hidden bg-beige-light py-14 md:py-20 lg:py-24 ${
+        revealed ? 'section-reveal-active' : ''
+      }`}
       aria-label="שירותים"
     >
-      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
-        <Parallax
-          speed={0.22}
-          speedX={0.16}
-          className="absolute right-0 top-[20%] h-[min(55vw,480px)] w-[min(55vw,480px)] translate-x-1/4 rounded-full bg-[#2D4733]/[0.04] blur-[80px] md:blur-[100px]"
-        />
-        <Parallax
-          speed={-0.18}
-          speedX={-0.12}
-          className="absolute left-0 bottom-[8%] h-[min(48vw,400px)] w-[min(48vw,400px)] -translate-x-1/4 rounded-full bg-[#C4A574]/[0.08] blur-[70px]"
-        />
-      </div>
-
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-right md:px-8 lg:px-12">
-
-        <Parallax speed={-0.09} speedX={0.05} className="mb-16 block md:mb-20">
+        <div
+          className="reveal-child mb-16 md:mb-20"
+          style={{ '--reveal-stagger': 0 }}
+        >
           <div className="flex items-center justify-start gap-3">
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-dark/50">
+            <span className="text-sm font-medium uppercase tracking-[0.2em] text-dark/55 md:text-[0.9375rem]">
               שירותים
             </span>
-            <span className="h-px w-10 shrink-0 bg-dark/25" aria-hidden />
+            <span
+              className="reveal-accent-line h-px w-12 shrink-0 bg-dark/25 md:w-14"
+              aria-hidden
+            />
           </div>
-        </Parallax>
+        </div>
 
         <div className="grid grid-cols-1 gap-12 md:gap-16 lg:grid-cols-2 lg:gap-x-20 lg:gap-y-14">
           {services.map((service, index) => (
-            <Parallax
+            <div
               key={index}
-              speed={0.1 + index * 0.06}
-              speedX={index % 2 === 0 ? 0.08 : -0.08}
-              className="block"
+              className="reveal-child"
+              style={{ '--reveal-stagger': index + 1 }}
             >
-              <div>
-                <div className="mb-6 text-dark/60">{service.icon}</div>
-                <h3 className="mb-4 text-2xl font-semibold leading-[1.12] tracking-tight text-dark md:text-3xl">
-                  {service.title}
-                </h3>
-                <p className="text-base leading-relaxed text-gray-600 md:text-lg">
-                  {service.description}
-                </p>
-              </div>
-            </Parallax>
+              <div className="reveal-icon mb-6 text-dark/60">{service.icon}</div>
+              <h3 className="mb-4 text-2xl font-semibold leading-[1.12] tracking-tight text-dark md:text-3xl">
+                {service.title}
+              </h3>
+              <p className="text-base leading-relaxed text-gray-600 md:text-lg">
+                {service.description}
+              </p>
+            </div>
           ))}
         </div>
-
       </div>
     </section>
   );

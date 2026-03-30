@@ -1,31 +1,64 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const About = () => {
+  const sectionRef = useRef(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return undefined;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -6% 0px' },
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section id="about" dir="rtl" className="section relative overflow-hidden bg-[#f5f4f0]">
-      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
-        <div className="absolute -right-[10%] top-[8%] h-[min(50vw,420px)] w-[min(50vw,420px)] rounded-full bg-[#2D4733]/[0.05] blur-[76px] md:blur-[96px]" />
-        <div className="absolute -left-[6%] bottom-[12%] h-[min(42vw,340px)] w-[min(42vw,340px)] rounded-full bg-white/50 blur-[48px] md:blur-[64px]" />
-      </div>
+    <section
+      ref={sectionRef}
+      id="about"
+      dir="rtl"
+      className={`section section-reveal-ready relative bg-[#f5f4f0] ${
+        revealed ? 'section-reveal-active' : ''
+      }`}
+    >
       <div className="container relative z-10">
-        <div className="mb-12 text-right md:mb-16 lg:mb-20">
+        <div
+          className="reveal-child mb-12 text-right md:mb-16 lg:mb-20"
+          style={{ '--reveal-stagger': 0 }}
+        >
           <div className="flex items-center justify-start gap-3">
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-dark/50">
+            <span className="text-sm font-medium uppercase tracking-[0.2em] text-dark/55 md:text-[0.9375rem]">
               אודות
             </span>
-            <span className="h-px w-10 shrink-0 bg-dark/25" aria-hidden />
+            <span
+              className="reveal-accent-line h-px w-12 shrink-0 bg-dark/25 md:w-14"
+              aria-hidden
+            />
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-10 lg:flex-row lg:gap-16">
-          <div className="order-2 w-full text-right lg:order-1 lg:w-1/2">
+        <div className="flex flex-col items-stretch gap-14 lg:flex-row lg:items-start lg:gap-20">
+          <div
+            className="reveal-child order-2 w-full text-right lg:order-1 lg:w-1/2"
+            style={{ '--reveal-stagger': 2 }}
+          >
             <h2 className="text-3xl font-semibold leading-[1.12] tracking-tight text-dark md:text-4xl lg:text-[2.35rem]">
               <span className="text-dark/40">שלום,</span>
               <br />
               אני אלכסנדרה.
             </h2>
 
-            <div className="mt-8 space-y-4">
+            <div className="mt-10 space-y-5">
               <p className="text-base font-semibold text-dark md:text-lg">
                 מעצבת פנים ואדריכלית רב-תחומית.
               </p>
@@ -35,9 +68,13 @@ const About = () => {
             </div>
           </div>
 
-          <div className="order-1 w-full lg:order-2 lg:w-1/2">
-            <div className="flex justify-start lg:justify-end" dir="ltr">
-              <div className="aspect-4/5 w-[min(100%,15.5rem)] shrink-0 overflow-hidden rounded-sm shadow-sm sm:w-[min(100%,17rem)] md:rounded-md lg:w-full lg:max-w-md">
+          <div
+            className="reveal-child order-1 flex w-full max-w-[17.5rem] justify-center sm:max-w-[17rem] lg:order-2 lg:max-w-md lg:w-1/2 lg:justify-end"
+            dir="ltr"
+            style={{ '--reveal-stagger': 1 }}
+          >
+            <figure className="mx-auto w-full lg:mr-0 lg:ml-auto">
+              <div className="aspect-[4/5] w-full overflow-hidden rounded-none border border-dark/[0.12]">
                 <img
                   src="/designer.png"
                   alt="אלכסנדרה פאצינה"
@@ -45,7 +82,7 @@ const About = () => {
                   loading="lazy"
                 />
               </div>
-            </div>
+            </figure>
           </div>
         </div>
       </div>

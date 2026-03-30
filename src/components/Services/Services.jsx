@@ -33,10 +33,10 @@ const Services = () => {
       <div className="container">
         <div className="mb-12 text-right md:mb-16 lg:mb-20">
           <div className="flex items-center justify-start gap-3">
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-dark/50">
+            <span className="text-sm font-medium uppercase tracking-[0.2em] text-dark/55 md:text-[0.9375rem]">
               שירותים
             </span>
-            <span className="h-px w-10 shrink-0 bg-dark/25" aria-hidden />
+            <span className="h-px w-12 shrink-0 bg-dark/25 md:w-14" aria-hidden />
           </div>
           <h2 className="section-title-gap text-3xl font-semibold leading-[1.12] tracking-tight text-dark md:text-4xl lg:text-[2.35rem]">
             מעטפת מלאה לתכנון ועיצוב פנים

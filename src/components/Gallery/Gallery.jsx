@@ -63,7 +63,6 @@ function GalleryCard({ project, index, onOpen }) {
       >
         <div className="overflow-hidden rounded-sm bg-beige-light md:rounded-md">
           <div ref={ref} style={style} className="w-full">
-            {/* Резерв висоти до завантаження — інакше на мобільному img без розмірів дає 0px висоти */}
             <div className="relative aspect-[4/5] w-full bg-beige-light">
               <img
                 src={project.image}
@@ -132,10 +131,10 @@ const Gallery = () => {
         <div className="mb-12 text-right md:mb-16 lg:mb-20">
           <Parallax speed={-0.08} speedX={0.05} className="inline-block w-full">
             <div className="flex items-center justify-start gap-3">
-              <span className="text-xs font-medium uppercase tracking-[0.2em] text-dark/50">
+              <span className="text-sm font-medium uppercase tracking-[0.2em] text-dark/55 md:text-[0.9375rem]">
                 עבודות
               </span>
-              <span className="h-px w-10 shrink-0 bg-dark/25" aria-hidden />
+              <span className="h-px w-12 shrink-0 bg-dark/25 md:w-14" aria-hidden />
             </div>
           </Parallax>
           <h2 className="section-title-gap text-3xl font-semibold leading-[1.12] tracking-tight text-dark md:text-4xl lg:text-[2.35rem]">

@@ -51,4 +51,134 @@
   .section-title-gap {
     @apply mt-6 md:mt-9;
   }
+
+  /**
+   * Одноразове поява: .section-reveal-active + дочірні .reveal-child (--reveal-stagger).
+   * Keyframes + легкий scale, без «тягучого» паралаксу.
+   */
+  @keyframes reveal-rise {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 30px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes reveal-pop-icon {
+    from {
+      opacity: 0;
+      transform: scale(0.82) translate3d(0, 12px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes reveal-rule-grow {
+    from {
+      transform: scaleX(0);
+      opacity: 0;
+    }
+    to {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+  }
+
+  .section-reveal-ready .reveal-child {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+  }
+
+  .section-reveal-ready.section-reveal-active .reveal-child {
+    animation: reveal-rise 0.95s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--reveal-stagger, 0) * 72ms);
+  }
+
+  /* קו ליד כותרת משנה — נמתח מימין (RTL) */
+  .section-reveal-ready .reveal-accent-line {
+    display: block;
+    transform: scaleX(0);
+    transform-origin: right center;
+    opacity: 0;
+  }
+
+  .section-reveal-ready.section-reveal-active .reveal-accent-line {
+    animation: reveal-rule-grow 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--reveal-stagger, 0) * 72ms + 140ms);
+  }
+
+  /* קו דק בתוך שלב */
+  .section-reveal-ready .reveal-step-rule {
+    transform: scaleX(0);
+    transform-origin: right center;
+    opacity: 0;
+  }
+
+  .section-reveal-ready.section-reveal-active .reveal-step-rule {
+    animation: reveal-rule-grow 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--reveal-stagger, 0) * 72ms + 320ms);
+  }
+
+  .section-reveal-ready .reveal-icon {
+    opacity: 0;
+    transform: scale(0.82) translate3d(0, 12px, 0);
+  }
+
+  .section-reveal-ready.section-reveal-active .reveal-icon {
+    animation: reveal-pop-icon 0.72s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+    animation-delay: calc(var(--reveal-stagger, 0) * 72ms + 160ms);
+  }
+
+  /* שלבי עבודה: כל שורה בנפרד בגלילה */
+  .step-scroll-reveal {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+  }
+
+  .step-scroll-reveal.is-inview {
+    animation: reveal-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section-reveal-ready .reveal-child {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+
+    .section-reveal-ready.section-reveal-active .reveal-child {
+      animation: none;
+    }
+
+    .section-reveal-ready .reveal-accent-line,
+    .section-reveal-ready .reveal-step-rule {
+      opacity: 1;
+      transform: none;
+    }
+
+    .section-reveal-ready.section-reveal-active .reveal-accent-line,
+    .section-reveal-ready.section-reveal-active .reveal-step-rule {
+      animation: none;
+    }
+
+    .section-reveal-ready .reveal-icon,
+    .section-reveal-ready.section-reveal-active .reveal-icon {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+
+    .step-scroll-reveal,
+    .step-scroll-reveal.is-inview {
+      opacity: 1;
+      transform: none;
+      animation: none !important;
+    }
+
+  }
 }

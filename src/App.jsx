@@ -8,12 +8,16 @@ import ServicesLead from './components/ServicesLead/ServicesLead';
 import ServiceStepsScroll from './components/ServiceStepsScroll/ServiceStepsScroll';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
+import WhatsAppWidget from './components/WhatsAppWidget/WhatsAppWidget';
+import Partners from './components/Partners/Partners';
 
 function App() {
   return (
     <div className="min-h-screen bg-beige-light text-dark">
+      <WhatsAppWidget />
       <Navbar />
       <Hero />
+      <Partners />
       <Gallery />
       <About />
       <ServicesLead />
