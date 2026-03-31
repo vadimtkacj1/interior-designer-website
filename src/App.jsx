@@ -15,13 +15,15 @@ function App() {
       <WhatsAppWidget />
       <Navbar />
       <VideoIntro />
-      <Partners />
-      <Gallery />
-      <About />
-      <ServicesLead />
-      <ServiceStepsScroll />
-      <Contact />
-      <Footer />
+      <div className="relative z-10">
+        <Partners />
+        <Gallery />
+        <About />
+        <ServicesLead />
+        <ServiceStepsScroll />
+        <Contact />
+        <Footer />
+      </div>
     </div>
   );
 }

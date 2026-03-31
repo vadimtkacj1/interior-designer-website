@@ -1,16 +1,36 @@
+import { useEffect, useRef } from 'react';
+
 const VideoIntro = () => {
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    const reduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+
+    const handleScroll = () => {
+      if (!contentRef.current) return;
+      const progress = Math.min(Math.max(window.scrollY / window.innerHeight, 0), 1);
+      const scale = 1 - progress * 0.1;
+      const opacity = 1 - progress * 0.75;
+      contentRef.current.style.transform = `scale(${scale})`;
+      contentRef.current.style.opacity = opacity;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const scrollToHero = () => {
-    const el = document.getElementById('hero');
-    if (el) {
-      const reduced =
-        typeof window !== 'undefined' &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
-    }
+    const reduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: window.innerHeight, behavior: reduced ? 'auto' : 'smooth' });
   };
 
   return (
-    <section className="relative w-full h-screen overflow-hidden" dir="rtl" lang="he">
+    <section className="sticky top-0 z-0 w-full h-screen overflow-hidden" dir="rtl" lang="he">
       <style>{`
         @keyframes bounceArrow {
           0%, 100% { transform: translateY(0); opacity: 0.7; }
@@ -47,7 +67,7 @@ const VideoIntro = () => {
       <div className="absolute inset-0 bg-black/50" />
 
       {/* Text content */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center text-white">
+      <div ref={contentRef} className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center text-white" style={{ willChange: 'transform, opacity' }}>
         <h1 className="video-title mb-5 text-[2.4rem] font-bold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-[5.5rem]">
           עיצוב חסר פשרות.<br />עד הפרט האחרון.
         </h1>
