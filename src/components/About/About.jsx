@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const About = () => {
   const sectionRef = useRef(null);
@@ -7,17 +7,10 @@ const About = () => {
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return undefined;
-
     const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setRevealed(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.08, rootMargin: '0px 0px -6% 0px' },
+      ([entry]) => { if (entry.isIntersecting) { setRevealed(true); io.disconnect(); } },
+      { threshold: 0.01, rootMargin: '0px 0px -2% 0px' },
     );
-
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -27,62 +20,82 @@ const About = () => {
       ref={sectionRef}
       id="about"
       dir="rtl"
-      className={`section section-reveal-ready relative bg-[#f5f4f0] ${
-        revealed ? 'section-reveal-active' : ''
-      }`}
+      className={`section-reveal-ready relative overflow-hidden bg-beige-light pt-24 pb-16 lg:pt-32 lg:pb-24 ${revealed ? 'section-reveal-active' : ''}`}
     >
-      <div className="container relative z-10 ">
+      <div className="container mx-auto px-6 sm:px-12 lg:px-16 max-w-7xl relative">
+        
+        {/* ── Заголовок (אודות) ── */}
         <div
-          className="reveal-child mb-12 text-right md:mb-16 lg:mb-20"
+          className="reveal-child relative mb-12 flex justify-center items-center gap-3 z-10"
           style={{ '--reveal-stagger': 0 }}
         >
-          <div className="flex items-center justify-start gap-3">
-            <span className="text-base font-medium uppercase tracking-[0.2em] text-dark/55 md:text-lg">
-              אודות
-            </span>
-            <span
-              className="reveal-accent-line h-px w-12 shrink-0 bg-dark/25 md:w-14"
-              aria-hidden
-            />
-          </div>
+          <span className="h-px w-12 shrink-0 bg-dark/25" aria-hidden />
+          <span className="text-base font-medium uppercase tracking-[0.2em] text-dark/55 md:text-lg">
+            אודות
+          </span>
+          <span className="h-px w-12 shrink-0 bg-dark/25" aria-hidden />
         </div>
 
-        <div className="flex flex-col items-center gap-14 lg:flex-row lg:items-start lg:gap-20">
-          <div
-            className="reveal-child order-2 w-full text-center lg:order-1 lg:w-1/2"
-            style={{ '--reveal-stagger': 2 }}
-          >
-            <h2 className="text-3xl font-semibold leading-[1.12] tracking-tight text-dark md:text-4xl lg:text-[2.35rem]">
-              <span className="text-dark/40">שלום,</span>
-              <br />
-              אני אלכסנדרה.
-            </h2>
-
-            <div className="mt-10 space-y-5">
-              <p className="text-center text-base font-semibold text-dark md:text-lg">
-                מעצבת פנים ואדריכלית רב-תחומית.
-              </p>
-              <p className="text-center max-w-prose text-base leading-relaxed text-gray-600 md:text-lg">
+        <div className="relative flex flex-col items-center z-10">
+          <div className="relative flex flex-col items-center w-full max-w-4xl text-center">
+            
+            {/* ── Верхний текст ── */}
+            <div
+              className="reveal-child mb-10 lg:mb-14 px-2"
+              style={{ '--reveal-stagger': 1 }}
+            >
+              <h2 className="text-3xl md:text-4xl lg:text-[2.35rem] font-bold text-dark mb-4 leading-tight tracking-tight">
+                מעצבת פנים ומומחית לתכנון ומידול תלת-ממדי מתקדם
+              </h2>
+              <p className="text-base md:text-lg font-medium text-dark/80 max-w-[45ch] mx-auto">
                 אני משלבת בסיס של הרמוניה קלאסית עם הנדסה טכנית קפדנית כדי ליצור חללים שהם גם יפהפיים וגם מבוצעים בשלמות.
               </p>
             </div>
-          </div>
 
-          <div
-            className="reveal-child order-1 flex w-full max-w-[17.5rem] justify-center sm:max-w-[17rem] lg:order-2 lg:max-w-md lg:w-1/2 lg:justify-end"
-            dir="ltr"
-            style={{ '--reveal-stagger': 1 }}
-          >
-            <figure className="mx-auto w-full lg:mr-0 lg:ml-auto ">
-              <div className="aspect-[4/5] w-full overflow-hidden rounded-none border border-dark/[0.12]">
+            {/* ── Блок Фото + Имя ── */}
+            <div
+              className="reveal-child relative flex flex-col items-center w-full mb-12 lg:mb-20"
+              style={{ '--reveal-stagger': 2 }}
+            >
+              {/* Alexandra: Еще чуть выше (-translate-y-36) для мобилок */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 -translate-y-42 lg:-translate-y-28">
+                <span
+                  className="block text-[26vw] lg:text-[22rem] text-dark/10 whitespace-nowrap"
+                  style={{ 
+                    fontFamily: "'Dancing Script', cursive", 
+                    fontWeight: 600,
+                    lineHeight: 1
+                  }}
+                  dir="ltr"
+                >
+                  Alexandra
+                </span>
+              </div>
+
+              {/* Портрет */}
+              <div className="relative z-10 w-full max-w-[260px] sm:max-w-xs">
                 <img
-                  src="/designer.png"
+                  src="/designer.png" 
                   alt="אלכסנדרה פאצינה"
-                  className="h-full w-full object-cover"
+                  className="w-full h-auto mx-auto"
                   loading="lazy"
                 />
               </div>
-            </figure>
+            </div>
+
+            {/* ── Описание снизу ── */}
+            <div
+              className="reveal-child space-y-6 px-2 pb-8"
+              style={{ '--reveal-stagger': 3 }}
+            >
+              <p className="max-w-[65ch] mx-auto text-base md:text-lg leading-[1.8] text-dark/70">
+                עם הכשרה מקצועית ממכללת קונספט וניסיון טכני עשיר בתכנון פרויקטים הדורשים דיוק מקסימלי, אני מביאה לעולם העיצוב סטנדרט ביצוע גבוה ומוקפד.
+              </p>
+              <p className="max-w-[65ch] mx-auto text-base md:text-lg leading-[1.8] text-dark/70">
+                הסטודיו שלי מציע מעטפת שירותים מלאה (מא' ועד ת') – החל מתכנון דירות קבלן, דרך עיצוב נגרות אישית, ועד להדמיות פוטוריאליסטיות ברמה הגבוהה ביותר שיאפשרו לכם לראות את התוצאה הסופית עוד לפני תחילת העבודה.
+              </p>
+            </div>
+
           </div>
         </div>
       </div>

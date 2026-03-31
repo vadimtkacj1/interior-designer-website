@@ -220,7 +220,7 @@ const Hero = () => {
             </p>
           </Parallax>
 
-          <Parallax speed={-0.05} className="flex justify-center">
+  <Parallax speed={-0.05} className="flex justify-center">
             <button
               type="button"
               dir="ltr"
@@ -228,8 +228,8 @@ const Hero = () => {
               className="blur-fade inline-flex items-center justify-center gap-3 rounded-none bg-[#2D4733] px-8 py-4 text-base font-medium text-white transition-colors hover:bg-[#243829] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2D4733] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f4f0] md:px-9 md:py-3.5 md:text-sm"
               style={{ animationDelay: '0.8s' }}
             >
+              <span className="text-base leading-none md:text-sm" aria-hidden>←</span>
               <span dir="rtl">השאירו פרטים לשיחת ייעוץ</span>
-              <span className="text-base leading-none md:text-sm" aria-hidden>→</span>
             </button>
           </Parallax>
 

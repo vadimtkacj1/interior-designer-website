@@ -83,8 +83,8 @@ const VideoIntro = () => {
           }}
           className="video-btn inline-flex items-center justify-center gap-3 bg-[#2D4733] px-8 py-4 text-base font-medium text-white transition-colors hover:bg-[#243829] focus:outline-none"
         >
+          <span aria-hidden>←</span>
           <span dir="rtl">השאירו פרטים לשיחת ייעוץ</span>
-          <span aria-hidden>→</span>
         </button>
       </div>
 

@@ -2,9 +2,9 @@ import React from 'react';
 import WhatsAppIcon from '../icons/WhatsAppIcon';
 
 const DEFAULT_MESSAGE =
-  'היי אבי , הגעתי מהאתר , אשמח לדעת מתי נוכל לקבוע פגישה ?';
+  'היי סשה , הגעתי מהאתר , אשמח לקבוע פגישת ייעוץ';
 
-const waHref = `https://wa.me/972544729513?text=${encodeURIComponent(DEFAULT_MESSAGE)}`;
+const waHref = `https://wa.me/972525270051?text=${encodeURIComponent(DEFAULT_MESSAGE)}`;
 
 export default function WhatsAppWidget() {
   return (

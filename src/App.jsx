@@ -15,7 +15,7 @@ function App() {
       <WhatsAppWidget />
       <Navbar />
       <VideoIntro />
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-col">
         <Partners />
         <Gallery />
         <About />

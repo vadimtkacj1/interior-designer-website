@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParallaxOffset } from '../../hooks/useParallaxOffset';
 import Parallax from '../Parallax/Parallax';
+import marbleTexture from '../../assets/images/marble-texture.jpg';
 import portfolio1 from '../../assets/images/portfolio1.jpg';
 import portfolio2 from '../../assets/images/portfolio2.jpeg';
 import portfolio3 from '../../assets/images/portfolio3.jpg';
@@ -54,16 +55,16 @@ function GalleryCard({ project, index, onOpen }) {
   const { ref, style } = useParallaxOffset(speedY, 0);
 
   return (
-    <article className="group relative mb-3 overflow-hidden rounded-sm bg-transparent sm:mb-5 md:mb-8 md:rounded-md">
+    <article className="group relative mb-3 sm:mb-5 md:mb-8">
       <button
         type="button"
         onClick={() => onOpen(index)}
-        className="block w-full cursor-zoom-in rounded-sm border-0 bg-transparent p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-dark focus-visible:ring-offset-2 focus-visible:ring-offset-beige-light md:rounded-md"
+        className="block w-full cursor-zoom-in border-0 bg-transparent p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-dark focus-visible:ring-offset-2 focus-visible:ring-offset-beige-light"
         aria-label={`פתיחה מלאה: ${project.title}`}
       >
-        <div className="overflow-hidden rounded-sm bg-beige-light md:rounded-md">
+        <div className="overflow-hidden rounded-md">
           <div ref={ref} style={style} className="w-full">
-            <div className="relative aspect-[4/5] w-full bg-beige-light">
+            <div className="relative aspect-[4/5] w-full">
               <img
                 src={project.image}
                 alt={project.title}
@@ -106,10 +107,12 @@ const Gallery = () => {
   return (
     <section
       id="portfolio"
-      className="section relative overflow-x-clip bg-beige-light scroll-mt-20 md:scroll-mt-24"
+      className="section relative overflow-x-clip scroll-mt-20 md:scroll-mt-24"
       dir="rtl"
       lang="he"
+      style={{ backgroundImage: `url(${marbleTexture})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
+      <div className="absolute inset-0 z-0 bg-beige-light/80" aria-hidden />
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
         <Parallax
           speed={0.26}
@@ -128,13 +131,14 @@ const Gallery = () => {
         />
       </div>
       <div className="container relative z-10">
-        <div className="mb-12 text-right md:mb-16 lg:mb-20">
+        <div className="mb-12 text-center md:mb-16 lg:mb-20">
           <Parallax speed={-0.08} speedX={0.05} className="inline-block w-full">
-            <div className="flex items-center justify-start gap-3">
+            <div className="flex items-center justify-center gap-3">
+              <span className="h-px w-12 shrink-0 bg-dark/25" aria-hidden />
               <span className="text-base font-medium uppercase tracking-[0.2em] text-dark/55 md:text-lg">
                 עבודות
               </span>
-              <span className="h-px w-12 shrink-0 bg-dark/25 md:w-14" aria-hidden />
+              <span className="h-px w-12 shrink-0 bg-dark/25" aria-hidden />
             </div>
           </Parallax>
           <h2 className="section-title-gap text-3xl font-semibold leading-[1.12] tracking-tight text-dark md:text-4xl lg:text-[2.35rem]">

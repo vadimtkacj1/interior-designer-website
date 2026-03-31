@@ -1,41 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react';
-import img1 from '../../assets/images/portfolio1.jpg';
-import img2 from '../../assets/images/portfolio2.jpeg';
-import img3 from '../../assets/images/portfolio3.jpg';
-import img4 from '../../assets/images/portfolio4.jpeg';
-import img5 from '../../assets/images/portfolio5.jpeg';
-import img6 from '../../assets/images/portfolio6.jpeg';
+import img2 from '../../assets/images/second-step.jpeg';
+import img3 from '../../assets/images/third-step.jpeg';
 
 const steps = [
   {
     title: 'היכרות והפרוגרמה',
-    body: 'פגישת ייעוץ ראשונית להבנת אורח החיים, התקציב והחלומות שלכם. בניית פרוגרמה — מסמך המפרט כמה חדרים דרושים, מה השימושים של כל חלל ואיזה סגנון עיצובי מועדף. המעצבת מודדת את הדירה בשטח כדי ליצור תוכנית מצב קיים.',
-    image: img1,
+    body: 'הכל מתחיל בהקשבה. בפגישת ההיכרות נצלול אל תוך הצרכים, החלומות ואורח החיים הייחודי שלכם. יחד ניצור את ה"פרוגרמה" – מסמך דרישות מקיף המהווה את המצפן לפרויקט כולו. נגדיר את התקציב, לוחות הזמנים, והחזון העיצובי שיהפוך את החלל שלכם לבית שמותאם לכם כמו כפפה ליד.',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=800&fit=crop&q=80',
   },
   {
     title: 'תכנון רעיוני',
-    body: 'סקיצות ותכנון מערך (Layout): העמדת ריהוט וחלוקת חללים — המעצבת מציעה מספר אופציות לסידור הבית. לוח השראה (Moodboard): גיבוש השפה הוויזואלית — חומרים, צבעים וטקסטורות.',
+    body: 'כאן החזון מתחיל לקרום עור וגידים. נבחן חלופות תכנון שונות לחלוקת החלל ולזרימה נכונה. זהו השלב שבו הקסם קורה: תקבלו הדמיות תלת-ממד (3D) פוטוריאליסטיות ברמה הגבוהה ביותר, שיאפשרו לכם להרגיש ולראות במדויק איך ייראה הבית שלכם, עד לרמת התאורה והטקסטורות, עוד לפני שנשברה לבנה אחת.',
     image: img2,
   },
   {
     title: 'תוכניות עבודה לביצוע',
-    body: 'תרגום התכנון לשפת הקבלנים: תוכנית הריסה ובנייה, חשמל ותאורה, אינסטלציה, ריצוף ופריסות, נגרות מפורטת למטבח וארונות, מיזוג אוויר ותוכנית מטבח.',
+    body: 'מתרגמים את העיצוב לשפת השטח ברמת דיוק של מילימטרים. נפיק סט תוכניות עבודה מקיף, קפדני וברור (הריסה, בנייה, חשמל, אינסטלציה, ריצוף ונגרות מותאמת אישית). השרטוטים האלו מהווים תוכנית פעולה חד-משמעית עבור הקבלן וכלל אנשי המקצוע, ולא משאירים שום מקום לטעויות בביצוע.',
     image: img3,
   },
   {
     title: 'רכישות',
-    body: 'ימי רכישות מרוכזים ביחד עם הלקוח: בחירת ריצוף, חיפויים, כלים סניטריים, מטבח, תאורה ורהיטים. הכנת כתב כמויות — רשימה מפורטת לקבלן לצורך הצעת מחיר מדויקת.',
-    image: img4,
+    body: 'יוצאים יחד לימי קניות ממוקדים ויעילים באולמות התצוגה המובילים. בעזרת הליווי הצמוד שלי, נבחר את חומרי הגמר, הכלים הסניטריים, הריצוף והתאורה המדויקים ביותר. המטרה היא לקבל החלטות נכונות שמשמרות את השפה העיצובית המקורית, תוך ניהול חכם ועמידה בתקציב שהגדרנו.',
+    image: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&h=800&fit=crop&q=80',
   },
   {
     title: 'פיקוח עליון',
-    body: 'המעצבת מגיעה לאתר בנקודות קריטיות — לפני יציקת חשמל, תחילת ריצוף ועוד — כדי לוודא שהקבלן עובד לפי התוכניות. פתרון בעיות בשטח בזמן אמת לאורך כל תהליך השיפוץ.',
-    image: img5,
+    body: 'השקט הנפשי שלכם לאורך כל תהליך השיפוץ או הבנייה. אגיע לשטח בנקודות זמן קריטיות כדי לוודא שהביצוע תואם במדויק לתוכניות העבודה, שהאיכות עומדת בסטנדרטים המחמירים שלנו, ולספק פתרונות מקצועיים בזמן אמת לכל אתגר טכני שעולה בשטח.',
+    image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&h=800&fit=crop&q=80',
   },
   {
     title: 'גמר והלבשה',
-    body: 'הפינישים האחרונים שהופכים את הדירה לבית: בחירת וילונות, שטיחים, תמונות ואקססוריז. סידור סופי והעמדת כל הרהיטים במקומם.',
-    image: img6,
+    body: 'הטאצ׳ הסופי שהופך חלל מעוצב לבית עם נשמה. נכניס ונמקם את הריהוט, הטקסטיל, האמנות והאקססוריז שבחרנו בקפידה, ונדייק כל פינה. בסיומו של השלב הזה, הבית יעמוד מוכן לחלוטין – בדיוק כפי שחלמתם עליו בהדמיות, וכל מה שיישאר לכם הוא פשוט להיכנס וליהנות.',
+    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&h=800&fit=crop&q=80',
   },
 ];
 
@@ -111,8 +107,8 @@ function StepRow({ step, index }) {
       style={{ opacity: 0, willChange: 'transform' }}
     >
       <span
-        className="block text-[6rem] font-semibold leading-none tracking-tight md:text-[8rem] lg:text-[10rem] select-none"
-        style={{ color: '#C8B89A' }}
+        className="block text-[7rem] leading-none md:text-[10rem] lg:text-[12rem] select-none"
+        style={{ color: '#C8B89A', fontFamily: "'Playfair Display', serif", fontWeight: 400 }}
       >
         {stepNum}
       </span>
@@ -175,11 +171,12 @@ const ServiceStepsScroll = () => {
           headerInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
         }`}
       >
-        <div className="flex items-center justify-start gap-4">
+        <div className="flex items-center justify-center gap-3">
+          <span className="h-px w-12 shrink-0 bg-dark/25" aria-hidden />
           <span className="text-base font-medium uppercase tracking-[0.2em] text-dark/55 md:text-lg">
             שלבי העבודה
           </span>
-          <span className="h-px w-10 shrink-0 bg-dark/20" aria-hidden />
+          <span className="h-px w-12 shrink-0 bg-dark/25" aria-hidden />
         </div>
       </div>
 

@@ -80,14 +80,12 @@ const ServicesLead = () => {
           className="reveal-child mb-16 md:mb-20"
           style={{ '--reveal-stagger': 0 }}
         >
-          <div className="flex items-center justify-start gap-3">
+          <div className="flex items-center justify-center gap-3">
+            <span className="h-px w-12 shrink-0 bg-dark/25" aria-hidden />
             <span className="text-base font-medium uppercase tracking-[0.2em] text-dark/55 md:text-lg">
               שירותים
             </span>
-            <span
-              className="reveal-accent-line h-px w-12 shrink-0 bg-dark/25 md:w-14"
-              aria-hidden
-            />
+            <span className="h-px w-12 shrink-0 bg-dark/25" aria-hidden />
           </div>
         </div>
 
@@ -95,7 +93,7 @@ const ServicesLead = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="reveal-child flex flex-col justify-center"
+              className={`reveal-child flex flex-col justify-center${index === services.length - 1 && services.length % 2 !== 0 ? ' lg:col-span-2 lg:max-w-lg lg:mx-auto' : ''}`}
               style={{ '--reveal-stagger': index + 1 }}
             >
               <div className="reveal-icon mb-6 flex justify-center text-dark/60">{service.icon}</div>
