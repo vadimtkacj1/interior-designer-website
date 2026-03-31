@@ -12,7 +12,7 @@ export default function WhatsAppWidget() {
       href={waHref}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed z-[9999] w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-[#2d4a3e] flex items-center justify-center shadow-lg shadow-[#2d4a3e]/40 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-xl hover:bg-[#3d6b5e] active:scale-95"
+      className="fixed z-[9999] w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-[#25D366] flex items-center justify-center shadow-lg shadow-[#25D366]/40 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-xl hover:bg-[#20bc59] active:scale-95"
       style={{
         bottom: 'max(1.5rem, env(safe-area-inset-bottom))',
         right: 'max(1.5rem, env(safe-area-inset-right))',

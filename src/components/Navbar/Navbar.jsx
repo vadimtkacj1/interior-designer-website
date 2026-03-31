@@ -16,6 +16,13 @@ function prefersReducedMotion() {
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [menuReveal, setMenuReveal] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const closeMenu = useCallback(() => {
     if (prefersReducedMotion()) {
@@ -127,13 +134,22 @@ const Navbar = () => {
     );
 
   return (
-    <nav dir="rtl" lang="he" className="fixed top-0 left-0 right-0 z-50 border-b border-dark/[0.04] bg-beige-light/90 backdrop-blur-md md:bg-beige-light/80">
+    <nav
+      dir="rtl"
+      lang="he"
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${
+        scrolled
+          ? 'border-b border-dark/4 bg-beige-light/90 backdrop-blur-md md:bg-beige-light/80'
+          : 'border-b border-transparent bg-transparent'
+      }`}
+    >
       <div className={navBarRowClass}>
         <div className="flex min-w-0 items-center">
           <img
             src="/logo.svg"
             alt="אלכסנדרה פאצינה"
-            className="h-12 w-auto object-contain md:h-16"
+            className="h-12 w-auto object-contain md:h-16 transition-[filter] duration-300"
+            style={!scrolled ? { filter: 'brightness(0) invert(1)' } : undefined}
           />
         </div>
 
@@ -144,30 +160,30 @@ const Navbar = () => {
           aria-expanded={isMobileMenuOpen}
           aria-label="תפריט"
         >
-          <span className="h-px w-6 bg-dark/80" />
-          <span className="h-px w-6 bg-dark/80" />
-          <span className="h-px w-6 bg-dark/80" />
+          <span className={`h-px w-6 transition-colors duration-300 ${scrolled ? 'bg-dark/80' : 'bg-white'}`} />
+          <span className={`h-px w-6 transition-colors duration-300 ${scrolled ? 'bg-dark/80' : 'bg-white'}`} />
+          <span className={`h-px w-6 transition-colors duration-300 ${scrolled ? 'bg-dark/80' : 'bg-white'}`} />
         </button>
 
         <div className="hidden items-center gap-12 md:flex lg:gap-16">
           <button
             type="button"
             onClick={() => scrollTo('services')}
-            className="text-[14px] font-semibold uppercase tracking-[0.1em] text-dark/60 transition-colors hover:text-dark"
+            className={`text-[14px] font-semibold uppercase tracking-[0.1em] transition-colors duration-300 ${scrolled ? 'text-dark/60 hover:text-dark' : 'text-white/80 hover:text-white'}`}
           >
             שירותים
           </button>
           <button
             type="button"
             onClick={() => scrollTo('portfolio')}
-            className="text-[14px] font-semibold uppercase tracking-[0.1em] text-dark/60 transition-colors hover:text-dark"
+            className={`text-[14px] font-semibold uppercase tracking-[0.1em] transition-colors duration-300 ${scrolled ? 'text-dark/60 hover:text-dark' : 'text-white/80 hover:text-white'}`}
           >
             עבודות
           </button>
           <button
             type="button"
             onClick={() => scrollTo('contact')}
-            className="text-[14px] font-semibold uppercase tracking-[0.1em] text-dark/60 transition-colors hover:text-dark"
+            className={`text-[14px] font-semibold uppercase tracking-[0.1em] transition-colors duration-300 ${scrolled ? 'text-dark/60 hover:text-dark' : 'text-white/80 hover:text-white'}`}
           >
             יצירת קשר
           </button>

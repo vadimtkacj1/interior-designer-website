@@ -1,7 +1,5 @@
-import React from 'react';
 import Navbar from './components/Navbar/Navbar';
-import Hero from './components/Hero/Hero';
-import Services from './components/Services/Services';
+import VideoIntro from './components/VideoIntro/VideoIntro';
 import Gallery from './components/Gallery/Gallery';
 import About from './components/About/About';
 import ServicesLead from './components/ServicesLead/ServicesLead';
@@ -16,7 +14,7 @@ function App() {
     <div className="min-h-screen bg-beige-light text-dark">
       <WhatsAppWidget />
       <Navbar />
-      <Hero />
+      <VideoIntro />
       <Partners />
       <Gallery />
       <About />
