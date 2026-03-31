@@ -70,11 +70,18 @@ const ServicesLead = () => {
       id="services"
       dir="rtl"
       lang="he"
-      className={`section-reveal-ready relative overflow-hidden bg-beige-light py-14 md:py-20 lg:py-24 ${
+      className={`section-reveal-ready bg-beige-light relative overflow-hidden py-14 md:py-20 lg:py-24 ${
         revealed ? 'section-reveal-active' : ''
       }`}
+      style={{
+        backgroundImage: 'url(/second-marble-texture.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
       aria-label="שירותים"
     >
+      <div className="absolute inset-0 z-0 " aria-hidden />
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-center md:px-8 lg:px-12">
         <div
           className="reveal-child mb-16 md:mb-20"
