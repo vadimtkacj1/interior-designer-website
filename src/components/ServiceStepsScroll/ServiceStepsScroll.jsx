@@ -1,4 +1,3 @@
-import React, { useEffect, useRef, useState } from 'react';
 import img2 from '../../assets/images/second-step.jpeg';
 import img3 from '../../assets/images/third-step.jpeg';
 
@@ -36,61 +35,11 @@ const steps = [
 ];
 
 function StepRow({ step, index }) {
-  const rowRef = useRef(null);
-  const imgRef = useRef(null);
-  const numRef = useRef(null);
-  const textRef = useRef(null);
   const isEven = index % 2 === 0;
   const stepNum = String(index + 1).padStart(2, '0');
 
-  useEffect(() => {
-    const row = rowRef.current;
-    if (!row) return undefined;
-
-    let rafId = null;
-
-    const update = () => {
-      const rect = row.getBoundingClientRect();
-      const wh = window.innerHeight;
-      const p = (rect.top + rect.height / 2 - wh / 2) / wh;
-      const visible = rect.top < wh * 0.9 && rect.bottom > 0;
-      const opacity = visible ? '1' : '0';
-
-      if (imgRef.current) {
-        imgRef.current.style.transform = `translateX(${p * 80}px)`;
-        imgRef.current.style.opacity = opacity;
-      }
-      if (numRef.current) {
-        numRef.current.style.transform = `translateY(${p * 40}px)`;
-        numRef.current.style.opacity = opacity;
-      }
-      if (textRef.current) {
-        textRef.current.style.transform = `translateX(${-p * 60}px)`;
-        textRef.current.style.opacity = opacity;
-      }
-      rafId = null;
-    };
-
-    const onScroll = () => {
-      if (!rafId) rafId = requestAnimationFrame(update);
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    update();
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, []);
-
   const image = step.image && (
-    <div
-      ref={imgRef}
-      className="order-1 md:order-0 w-full md:w-[42%] shrink-0"
-      style={{ opacity: 0, willChange: 'transform' }}
-    >
+    <div className="order-1 md:order-0 w-full md:w-[42%] shrink-0">
       <img
         src={step.image}
         alt={step.title}
@@ -101,11 +50,7 @@ function StepRow({ step, index }) {
   );
 
   const number = (
-    <div
-      ref={numRef}
-      className="order-2 md:order-0 shrink-0 self-center"
-      style={{ opacity: 0, willChange: 'transform' }}
-    >
+    <div className="order-2 md:order-0 shrink-0 self-center">
       <span
         className="block text-[7rem] leading-none md:text-[10rem] lg:text-[12rem] select-none"
         style={{ color: '#C8B89A', fontFamily: "'Playfair Display', serif", fontWeight: 400 }}
@@ -116,11 +61,7 @@ function StepRow({ step, index }) {
   );
 
   const text = (
-    <div
-      ref={textRef}
-      className="order-3 md:order-0 flex-1"
-      style={{ opacity: 0, willChange: 'transform' }}
-    >
+    <div className="order-3 md:order-0 flex-1">
       <h2 className="text-3xl font-semibold leading-tight tracking-tight text-dark md:text-4xl lg:text-5xl text-center">
         {step.title}
       </h2>
@@ -132,7 +73,6 @@ function StepRow({ step, index }) {
 
   return (
     <div
-      ref={rowRef}
       dir="rtl"
       lang="he"
       className="flex flex-col md:flex-row items-center gap-8 md:gap-10 px-8 py-12 md:px-16 md:py-14 lg:px-24 lg:py-16 overflow-hidden"
@@ -146,47 +86,24 @@ function StepRow({ step, index }) {
   );
 }
 
-const ServiceStepsScroll = () => {
-  const headerRef = useRef(null);
-  const [headerInView, setHeaderInView] = useState(false);
-
-  useEffect(() => {
-    const el = headerRef.current;
-    if (!el) return undefined;
-    const io = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setHeaderInView(true); io.disconnect(); } },
-      { threshold: 0.3 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <section className="bg-beige-light" aria-label="שלבי שירות">
-      <div
-        ref={headerRef}
-        dir="rtl"
-        lang="he"
-        className={`px-8 pb-0 pt-14 md:px-16 md:pt-16 lg:px-24 transition-all duration-700 ease-out ${
-          headerInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-        }`}
-      >
-        <div className="flex items-center justify-center gap-3">
-          <span className="h-px w-12 shrink-0 bg-dark/25" aria-hidden />
-          <span className="text-base font-medium uppercase tracking-[0.2em] text-dark/55 md:text-lg">
-            שלבי העבודה
-          </span>
-          <span className="h-px w-12 shrink-0 bg-dark/25" aria-hidden />
-        </div>
+const ServiceStepsScroll = () => (
+  <section className="bg-beige-light" aria-label="שלבי שירות">
+    <div dir="rtl" lang="he" className="px-8 pb-0 pt-14 md:px-16 md:pt-16 lg:px-24">
+      <div className="flex items-center justify-center gap-3">
+        <span className="h-px w-12 shrink-0 bg-dark/25" aria-hidden />
+        <span className="text-base font-medium uppercase tracking-[0.2em] text-dark/55 md:text-lg">
+          שלבי העבודה
+        </span>
+        <span className="h-px w-12 shrink-0 bg-dark/25" aria-hidden />
       </div>
+    </div>
 
-      <div>
-        {steps.map((step, i) => (
-          <StepRow key={step.title} step={step} index={i} />
-        ))}
-      </div>
-    </section>
-  );
-};
+    <div>
+      {steps.map((step, i) => (
+        <StepRow key={step.title} step={step} index={i} />
+      ))}
+    </div>
+  </section>
+);
 
 export default ServiceStepsScroll;
