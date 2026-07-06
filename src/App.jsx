@@ -8,8 +8,23 @@ import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import WhatsAppWidget from './components/WhatsAppWidget/WhatsAppWidget';
 import Partners from './components/Partners/Partners';
+import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy';
+import TermsOfUse from './components/TermsOfUse/TermsOfUse';
+import AccessibilityStatement from './components/AccessibilityStatement/AccessibilityStatement';
+
+const legalPages = {
+  '/privacy-policy': PrivacyPolicy,
+  '/terms-of-use': TermsOfUse,
+  '/accessibility-statement': AccessibilityStatement,
+};
 
 function App() {
+  const path = window.location.pathname.replace(/\/+$/, '');
+  const LegalPage = legalPages[path];
+  if (LegalPage) {
+    return <LegalPage />;
+  }
+
   return (
     <div className="min-h-screen bg-beige-light text-dark">
       <WhatsAppWidget />

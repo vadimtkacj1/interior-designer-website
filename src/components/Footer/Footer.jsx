@@ -88,6 +88,28 @@ const Footer = () => {
           <p className="leading-relaxed">
             © {year} אלכסנדרה פאצינה. כל הזכויות שמורות.
           </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+            <a
+              href="/privacy-policy"
+              className="text-white/90 transition-opacity hover:opacity-70"
+            >
+              מדיניות פרטיות
+            </a>
+            <span className="h-3 w-px bg-white/30" aria-hidden />
+            <a
+              href="/terms-of-use"
+              className="text-white/90 transition-opacity hover:opacity-70"
+            >
+              תקנון ותנאי שימוש
+            </a>
+            <span className="h-3 w-px bg-white/30" aria-hidden />
+            <a
+              href="/accessibility-statement"
+              className="text-white/90 transition-opacity hover:opacity-70"
+            >
+              הצהרת נגישות
+            </a>
+          </div>
           <a
             href="https://aiterra.agency/"
             target="_blank"

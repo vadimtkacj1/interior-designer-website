@@ -23,6 +23,7 @@ const Contact = () => {
     phone: '',
     message: '',
   });
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState('idle');
   const [feedback, setFeedback] = useState('');
 
@@ -50,6 +51,12 @@ const Contact = () => {
       return;
     }
 
+    if (!consent) {
+      setStatus('error');
+      setFeedback('יש לאשר את מדיניות הפרטיות לפני השליחה');
+      return;
+    }
+
     setStatus('submitting');
 
     try {
@@ -74,6 +81,7 @@ const Contact = () => {
       setStatus('success');
       setFeedback('הפרטים נשלחו בהצלחה. נחזור אליכם בקרוב.');
       setFormData({ name: '', phone: '', message: '' });
+      setConsent(false);
     } catch {
       setStatus('error');
       setFeedback('לא ניתן להתחבר לשרת. בדקו את החיבור או נסו מאוחר יותר.');
@@ -222,6 +230,33 @@ const Contact = () => {
                 disabled={status === 'submitting'}
                 className={textareaClass}
               />
+
+              <label
+                htmlFor="contact-consent"
+                className="flex cursor-pointer items-start gap-3 text-right"
+              >
+                <input
+                  id="contact-consent"
+                  type="checkbox"
+                  name="consent"
+                  checked={consent}
+                  onChange={(e) => setConsent(e.target.checked)}
+                  required
+                  disabled={status === 'submitting'}
+                  className="mt-1 h-4 w-4 shrink-0 cursor-pointer rounded-none border border-dark/25 accent-[#2D4733]"
+                />
+                <span className="text-sm leading-relaxed text-dark/70">
+                  קראתי ואני מסכים/ה ל
+                  <a
+                    href="/privacy-policy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-[#2D4733] underline underline-offset-2 hover:text-[#243829]"
+                  >
+                    מדיניות הפרטיות
+                  </a>
+                </span>
+              </label>
 
               <button
                 type="submit"
