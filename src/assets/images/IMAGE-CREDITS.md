@@ -1,17 +1,22 @@
 # Step images — source & licence record
 
-Images used in `ServiceStepsScroll` (the 6 "שלבי העבודה" steps). Kept as proof of
-commercial-use rights. A warm editorial colour grade was applied to all six so the
-set looks cohesive; grading does not affect the licence.
+Images used in `ServiceStepsScroll` (the 6 "שלבי העבודה" steps).
 
-| File | Step | Source | Licence |
-|------|------|--------|---------|
-| `first-step.jpeg`  | 1 · היכרות והפרוגרמה | Pexels #6580007 — https://www.pexels.com/photo/interior-design-decorative-samples-6580007/ | Pexels licence (free commercial, no attribution required) |
-| `second-step.jpeg` | 2 · תכנון רעיוני | **Own work** — Alexandra Pacina 3D model | Owned |
-| `third-step.jpeg`  | 3 · תוכניות עבודה לביצוע | **Own work** — Alexandra Pacina construction drawing | Owned |
-| `fourth-step.jpeg` | 4 · רכישות | Pexels #6583373 — https://www.pexels.com/photo/a-different-objects-on-the-table-6583373/ | Pexels licence (free commercial, no attribution required) |
-| `fifth-step.jpeg`  | 5 · פיקוח עליון | Pexels #30924413 — https://www.pexels.com/photo/modern-kitchen-renovation-in-progress-30924413/ | Pexels licence (free commercial, no attribution required) |
-| `sixth-step.jpeg`  | 6 · גמר והלבשה | Unsplash bJGBQj5cf6w — https://unsplash.com/photos/a-stylish-neutral-toned-living-room-is-shown-bJGBQj5cf6w | Unsplash licence (free commercial, no attribution required) |
+All six are **AI-generated** (text-to-image) with Google **Gemini 3 Pro Image**
+via OpenRouter, created specifically for this site. They contain no real people,
+no brand names/logos, and no readable text, so they carry **no third-party
+copyright, trademark, or personality rights** and are free for commercial use.
+A consistent warm editorial look ties the set together.
 
-Note: Unsplash and Pexels licences permit commercial use without attribution; this file
-is kept only as an internal record.
+| File | Step (he) | Scene | Source |
+|------|-----------|-------|--------|
+| `first-step.jpeg`  | היכרות והפרוגרמה | Consultation flat-lay — material samples, floor plan, sketchbook | AI (Gemini 3 Pro Image) |
+| `second-step.jpeg` | תכנון רעיוני | Concept stage — 3D render prints, layout variants, palette | AI (Gemini 3 Pro Image) |
+| `third-step.jpeg`  | תוכניות עבודה לביצוע | Working drawings — blueprints, scale ruler, compass | AI (Gemini 3 Pro Image) |
+| `fourth-step.jpeg` | רכישות | Material selection — stone/tile samples, brass hardware | AI (Gemini 3 Pro Image) |
+| `fifth-step.jpeg`  | פיקוח עליון | Site supervision — renovation in progress, plans in hand | AI (Gemini 3 Pro Image) |
+| `sixth-step.jpeg`  | גמר והלבשה | Finished styled living room | AI (Gemini 3 Pro Image) |
+
+Note: generated ~1200px wide, re-encoded to JPEG (~4:3) for the site. Previous
+versions used Pexels/Unsplash stock and own work; replaced with owned AI imagery
+to remove any third-party licensing dependency.
