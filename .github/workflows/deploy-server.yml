@@ -44,17 +44,14 @@ jobs:
           target: /var/www/html
           strip_components: 1
 
-      - name: Upload docker-compose and nginx.conf
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.IP_SERVER }}
-          username: ${{ secrets.USER_SERVER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          source: docker-compose.yml,nginx.conf
-          target: /root/website
-
-      - name: Start Docker container
+      # The `website` nginx container is a SHARED front proxy: besides this static
+      # site it also serves go-apartsale.online (proxied to the apartment-copy
+      # container) and terminates TLS on 443. Its /root/website/nginx.conf and
+      # docker-compose.yml are maintained on the server, NOT from this repo.
+      # Shipping this repo's copies here overwrote that config on 2026-07-10 and
+      # took go-apartsale.online down for four days. Deploy only builds output,
+      # then reload nginx to pick the new files up.
+      - name: Reload nginx
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.IP_SERVER }}
@@ -63,6 +60,4 @@ jobs:
           port: 22
           script: |
             set -euo pipefail
-            cd /root/website
-            docker compose pull
-            docker compose up -d --force-recreate
+            docker exec website nginx -s reload
